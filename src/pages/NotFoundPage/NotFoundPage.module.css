@@ -1,0 +1,33 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 1rem;
+  background: #f1f5f9;
+}
+
+.code {
+  margin: 0;
+  font-size: 6rem;
+  font-weight: 800;
+  color: #6366f1;
+  line-height: 1;
+}
+
+.message {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #64748b;
+}
+
+.back {
+  color: #6366f1;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.back:hover {
+  text-decoration: underline;
+}

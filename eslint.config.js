@@ -31,5 +31,8 @@ export default defineConfig([
         version: 'detect',
       },
     },
+    rules: {
+      'react-hooks/set-state-in-effect': 'off',
+    },
   },
 ]);

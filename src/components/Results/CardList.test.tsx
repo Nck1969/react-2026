@@ -10,9 +10,9 @@ describe('CardList', () => {
 
   it('renders a card for each item', () => {
     const items = [
-      { name: 'bulbasaur', description: 'Grass, Poison' },
-      { name: 'charmander', description: 'Fire' },
-      { name: 'squirtle', description: 'Water' },
+      { id: 1, name: 'bulbasaur', description: 'Grass, Poison' },
+      { id: 4, name: 'charmander', description: 'Fire' },
+      { id: 7, name: 'squirtle', description: 'Water' },
     ];
     render(<CardList items={items} />);
     expect(screen.getByText('bulbasaur')).toBeInTheDocument();
@@ -22,8 +22,8 @@ describe('CardList', () => {
 
   it('renders correct number of cards', () => {
     const items = [
-      { name: 'pikachu', description: 'Electric' },
-      { name: 'mewtwo', description: 'Psychic' },
+      { id: 25, name: 'pikachu', description: 'Electric' },
+      { id: 150, name: 'mewtwo', description: 'Psychic' },
     ];
     render(<CardList items={items} />);
     expect(screen.getAllByText(/electric|psychic/i)).toHaveLength(2);

@@ -4,7 +4,7 @@ import Results from './Results';
 
 describe('Results', () => {
   it('renders items passed as props', () => {
-    const items = [{ name: 'pikachu', description: 'Electric' }];
+    const items = [{ id: 25, name: 'pikachu', description: 'Electric' }];
     render(<Results items={items} />);
     expect(screen.getByText('pikachu')).toBeInTheDocument();
   });

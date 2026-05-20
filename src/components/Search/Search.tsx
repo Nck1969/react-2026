@@ -16,6 +16,12 @@ export default class Search extends Component<Props, State> {
     this.state = { value: props.initialTerm };
   }
 
+  componentDidUpdate(prevProps: Props) {
+    if (prevProps.initialTerm !== this.props.initialTerm) {
+      this.setState({ value: this.props.initialTerm });
+    }
+  }
+
   private handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ value: e.target.value });
   };

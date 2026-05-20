@@ -28,7 +28,7 @@ dist-ssr
 .env.test
 
 # Coverage
-coverage
+coverage/
 *.lcov
 .nyc_output
 

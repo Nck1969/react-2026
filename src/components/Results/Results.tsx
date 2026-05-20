@@ -4,12 +4,13 @@ import styles from './Results.module.css';
 
 interface Props {
   items: PokemonView[];
+  onCardClick?: (id: number) => void;
 }
 
-export default function Results({ items }: Props) {
+export default function Results({ items, onCardClick }: Props) {
   return (
     <section className={styles.section}>
-      <CardList items={items} />
+      <CardList items={items} onCardClick={onCardClick} />
     </section>
   );
 }

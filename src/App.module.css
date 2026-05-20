@@ -1,0 +1,23 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f1f5f9;
+}
+
+.searchSection {
+  padding: 1.25rem 1.5rem;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.resultsSection {
+  flex: 1;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}

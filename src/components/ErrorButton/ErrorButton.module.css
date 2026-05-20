@@ -1,0 +1,23 @@
+.button {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  background: #ef4444;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0.75;
+  transition:
+    opacity 0.15s,
+    background 0.15s;
+  z-index: 100;
+}
+
+.button:hover {
+  opacity: 1;
+  background: #dc2626;
+}

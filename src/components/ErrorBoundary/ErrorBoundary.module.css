@@ -1,0 +1,39 @@
+.fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  min-height: 100vh;
+  padding: 2rem;
+  background: #fef2f2;
+  text-align: center;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.75rem;
+  color: #b91c1c;
+}
+
+.subtitle {
+  margin: 0;
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+.button {
+  padding: 0.625rem 1.75rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  background: #dc2626;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.button:hover {
+  background: #b91c1c;
+}

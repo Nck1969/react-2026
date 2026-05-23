@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   addPokemon,
   removePokemon,
-  selectIsPokemonSelected,
+  isPokemonSelectedSelector,
 } from '../../store/selectedPokemonsSlice.ts';
 import type { RootState } from '../../store/store.ts';
 
@@ -17,7 +17,7 @@ export default function Card({ pokemon, onCardClick }: Props) {
   const dispatch = useDispatch();
 
   const isSelected = useSelector((state: RootState) =>
-    selectIsPokemonSelected(state, pokemon.id)
+    isPokemonSelectedSelector(state, pokemon.id)
   );
 
   return (

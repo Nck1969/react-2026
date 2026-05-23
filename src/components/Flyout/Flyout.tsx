@@ -1,24 +1,33 @@
 import { memo } from 'react';
-import { useDispatch } from 'react-redux';
-import { clearAllPokemons } from '../../store/selectedPokemonsSlice.ts';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  clearAllPokemons,
+  selectedPokemonsArraySelector,
+} from '../../store/selectedPokemonsSlice.ts';
 import classes from './Flyout.module.css';
+import downloadCsv from '../../utils/downloadCsv.ts';
 
 interface FlyoutProps {
   count: number;
 }
 
 const Flyout = memo<FlyoutProps>(({ count }) => {
+  const selectedPokemons = useSelector(selectedPokemonsArraySelector);
   const dispatch = useDispatch();
 
   const handleUnselectAllClick = () => {
     dispatch(clearAllPokemons());
   };
 
+  const handleDownloadCsvClick = () => {
+    downloadCsv(selectedPokemons);
+  };
+
   return (
     <div className={classes.wrapper}>
       <span>{`Selected pokemons count: ${count}`}</span>
 
-      <button>Download CSV</button>
+      <button onClick={handleDownloadCsvClick}>Download CSV</button>
 
       <button onClick={handleUnselectAllClick}>Unselect All</button>
     </div>

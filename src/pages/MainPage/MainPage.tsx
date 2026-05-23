@@ -12,7 +12,7 @@ import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import ErrorButton from '../../components/ErrorButton/ErrorButton';
 import styles from './MainPage.module.css';
 import { useSelector } from 'react-redux';
-import { selectPokemonSelectedCount } from '../../store/selectedPokemonsSlice.ts';
+import { selectedPokemonsCountSelector } from '../../store/selectedPokemonsSlice.ts';
 import { Flyout } from '../../components/Flyout/Flyout.tsx';
 
 export default function MainPage() {
@@ -28,7 +28,7 @@ export default function MainPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const selectedPokemonsCount = useSelector(selectPokemonSelectedCount);
+  const selectedPokemonsCount = useSelector(selectedPokemonsCountSelector);
 
   const loadResults = useCallback((term: string, p: number) => {
     setIsLoading(true);

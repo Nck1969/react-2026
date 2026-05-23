@@ -23,11 +23,15 @@ export const selectedPokemonsSlice = createSlice({
   },
 });
 
-export const selectIsPokemonSelected = (state: RootState, id: number) => {
+export const selectedPokemonsArraySelector = (state: RootState) => {
+  return Object.values(state.selectedPokemons);
+};
+
+export const isPokemonSelectedSelector = (state: RootState, id: number) => {
   return !!state.selectedPokemons[id];
 };
 
-export const selectPokemonSelectedCount = (state: RootState) => {
+export const selectedPokemonsCountSelector = (state: RootState) => {
   return Object.keys(state.selectedPokemons).length;
 };
 

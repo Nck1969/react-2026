@@ -1,9 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useSearchParams, Outlet, Link } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { Link, Outlet, useSearchParams } from 'react-router-dom';
 import { fetchPokemons } from '../../api/pokeApi';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { LS_KEY } from '../../constants/storage';
-import type { PokemonView } from '../../types/pokemon';
+import type { PokemonMinimalDetails } from '../../types/pokemon';
 import Search from '../../components/Search/Search';
 import Results from '../../components/Results/Results';
 import Pagination from '../../components/Pagination/Pagination';
@@ -19,30 +19,27 @@ export default function MainPage() {
   const hasDetails = searchParams.has('details') || false;
 
   const [searchTerm, setSearchTerm] = useLocalStorage(LS_KEY, '');
-  const [items, setItems] = useState<PokemonView[]>([]);
+  const [items, setItems] = useState<PokemonMinimalDetails[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const loadResults = useCallback(
-    (term: string, p: number) => {
-      setIsLoading(true);
-      setErrorMessage(null);
-      fetchPokemons(term, p)
-        .then(({ items: fetched, totalPages: total }) => {
-          setItems(fetched);
-          setTotalPages(total);
-          setIsLoading(false);
-        })
-        .catch((err: unknown) => {
-          setErrorMessage(
-            err instanceof Error ? err.message : 'An unexpected error occurred'
-          );
-          setIsLoading(false);
-        });
-    },
-    []
-  );
+  const loadResults = useCallback((term: string, p: number) => {
+    setIsLoading(true);
+    setErrorMessage(null);
+    fetchPokemons(term, p)
+      .then(({ items: fetched, totalPages: total }) => {
+        setItems(fetched);
+        setTotalPages(total);
+        setIsLoading(false);
+      })
+      .catch((err: unknown) => {
+        setErrorMessage(
+          err instanceof Error ? err.message : 'An unexpected error occurred'
+        );
+        setIsLoading(false);
+      });
+  }, []);
 
   useEffect(() => {
     if (!searchParams.get('page')) {
@@ -88,7 +85,9 @@ export default function MainPage() {
         <Search initialTerm={searchTerm} onSearch={handleSearch} />
       </header>
 
-      <div className={`${styles.content} ${hasDetails ? styles.withDetails : ''}`}>
+      <div
+        className={`${styles.content} ${hasDetails ? styles.withDetails : ''}`}
+      >
         <div className={styles.listPanel} onClick={handleMainPanelClick}>
           {isLoading ? (
             <Loader />

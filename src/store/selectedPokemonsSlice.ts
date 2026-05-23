@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { PokemonMinimalDetails } from '../types/pokemon.ts';
+import type { RootState } from './store.ts';
 
 type PokemonsState = Record<string, PokemonMinimalDetails>;
 
@@ -13,7 +14,7 @@ export const selectedPokemonsSlice = createSlice({
     addPokemon: (state, action: PayloadAction<PokemonMinimalDetails>) => {
       state[action.payload.id] = action.payload;
     },
-    removePokemon: (state, action: PayloadAction<string>) => {
+    removePokemon: (state, action: PayloadAction<number>) => {
       delete state[action.payload];
     },
     clearAllPokemons: () => {
@@ -21,6 +22,10 @@ export const selectedPokemonsSlice = createSlice({
     },
   },
 });
+
+export const selectIsPokemonSelected = (state: RootState, id: number) => {
+  return !!state.selectedPokemons[id];
+};
 
 // Action creators are generated for each case reducer function
 export const { addPokemon, removePokemon, clearAllPokemons } =

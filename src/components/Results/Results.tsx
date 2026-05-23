@@ -1,9 +1,9 @@
-import type { PokemonView } from '../../types/pokemon';
+import type { PokemonMinimalDetails } from '../../types/pokemon';
 import CardList from './CardList';
 import styles from './Results.module.css';
 
 interface Props {
-  items: PokemonView[];
+  items: PokemonMinimalDetails[];
   onCardClick?: (id: number) => void;
 }
 

@@ -1,9 +1,9 @@
 import type {
+  FetchPokemonsResult,
   PokeApiListResponse,
   PokeApiPokemon,
-  PokemonView,
   PokemonDetails,
-  FetchPokemonsResult,
+  PokemonMinimalDetails,
 } from '../types/pokemon';
 
 const BASE = 'https://pokeapi.co/api/v2';
@@ -15,14 +15,18 @@ function extractIdFromUrl(url: string): number {
   return Number(parts[parts.length - 1]);
 }
 
-async function fetchPokemonDetails(name: string): Promise<PokemonView> {
+async function fetchPokemonDetails(
+  name: string
+): Promise<PokemonMinimalDetails> {
   const res = await fetch(`${BASE}/pokemon/${name}`);
   if (!res.ok) throw new Error(`Pokemon "${name}" not found`);
   const data: PokeApiPokemon = await res.json();
   return {
     id: data.id,
     name: data.name,
-    description: data.types.map((t) => t.type.name).join(', '),
+    height: data.height,
+    weight: data.weight,
+    types: data.types.map((t) => t.type.name),
   };
 }
 
@@ -44,7 +48,9 @@ export async function fetchPokemons(
         {
           id: data.id,
           name: data.name,
-          description: data.types.map((t) => t.type.name).join(', '),
+          height: data.height,
+          weight: data.weight,
+          types: data.types.map((t) => t.type.name),
         },
       ],
       totalPages: 1,

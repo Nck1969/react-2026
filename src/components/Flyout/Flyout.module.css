@@ -4,13 +4,13 @@
 
     overflow-y: auto;
     border-radius: 12px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-md);
     padding: 1rem;
     min-height: 0;
 
     height: fit-content;
 
-    background: white;
+    background: var(--color-bg-surface);
     display: flex;
     flex-direction: row;
     align-items: center;

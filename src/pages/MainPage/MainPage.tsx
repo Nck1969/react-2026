@@ -14,6 +14,7 @@ import styles from './MainPage.module.css';
 import { useSelector } from 'react-redux';
 import { selectedPokemonsCountSelector } from '../../store/selectedPokemonsSlice.ts';
 import { Flyout } from '../../components/Flyout/Flyout.tsx';
+import { ThemeSwitcher } from '../../components/ThemeSwitcher/ThemeSwitcher.tsx';
 
 export default function MainPage() {
   const navigate = useNavigate();
@@ -90,6 +91,8 @@ export default function MainPage() {
           </Link>
         </nav>
         <Search initialTerm={searchTerm} onSearch={handleSearch} />
+
+        <ThemeSwitcher />
       </header>
 
       <div

@@ -2,13 +2,13 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: #f1f5f9;
+  background: var(--color-bg-page);
 }
 
 .header {
-  background: #fff;
-  border-bottom: 1px solid #e2e8f0;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  background: var(--color-bg-surface);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
   padding: 0.75rem 1.5rem;
   display: flex;
   align-items: center;
@@ -24,7 +24,7 @@
 .navLink {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #64748b;
+  color: var(--color-text-secondary);
   text-decoration: none;
   padding: 0.25rem 0;
   border-bottom: 2px solid transparent;
@@ -32,8 +32,8 @@
 }
 
 .navLink:hover {
-  color: #6366f1;
-  border-bottom-color: #6366f1;
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
 }
 
 .content {
@@ -49,17 +49,17 @@
 }
 
 .listPanel {
-  background: #fff;
+  background: var(--color-bg-surface);
   border-radius: 12px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-md);
   overflow: hidden;
   cursor: pointer;
 }
 
 .detailsPanel {
-  background: #fff;
+  background: var(--color-bg-surface);
   border-radius: 12px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-md);
   overflow: auto;
   cursor: default;
 }

@@ -9,16 +9,16 @@
   flex: 1;
   padding: 0.625rem 0.875rem;
   font-size: 0.95rem;
-  border: 2px solid #e2e8f0;
+  border: 2px solid var(--color-border);
   border-radius: 8px;
   outline: none;
   transition: border-color 0.15s;
-  background: #fff;
-  color: #1e293b;
+  background: var(--color-bg-surface);
+  color: var(--color-text-primary);
 }
 
 .input:focus {
-  border-color: #6366f1;
+  border-color: var(--color-primary);
 }
 
 .button {
@@ -26,7 +26,7 @@
   font-size: 0.95rem;
   font-weight: 600;
   color: #fff;
-  background: #6366f1;
+  background: var(--color-primary);
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -35,9 +35,9 @@
 }
 
 .button:hover {
-  background: #4f46e5;
+  background: var(--color-primary-hover);
 }
 
 .button:active {
-  background: #4338ca;
+  background: var(--color-primary-active);
 }

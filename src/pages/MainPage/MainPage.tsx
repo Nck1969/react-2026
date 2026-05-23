@@ -73,12 +73,6 @@ export default function MainPage() {
     navigate(`/details/${id}?page=${page}&details=${id}`);
   };
 
-  const handleMainPanelClick = () => {
-    if (hasDetails) {
-      setSearchParams({ page: String(page) });
-    }
-  };
-
   return (
     <div className={styles.layout}>
       <header className={styles.header}>
@@ -98,7 +92,7 @@ export default function MainPage() {
       <div
         className={`${styles.content} ${hasDetails ? styles.withDetails : ''}`}
       >
-        <div className={styles.listPanel} onClick={handleMainPanelClick}>
+        <div className={styles.listPanel}>
           {isLoading ? (
             <Loader />
           ) : errorMessage ? (

@@ -11,6 +11,9 @@ import Loader from '../../components/Loader/Loader';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import ErrorButton from '../../components/ErrorButton/ErrorButton';
 import styles from './MainPage.module.css';
+import { useSelector } from 'react-redux';
+import { selectPokemonSelectedCount } from '../../store/selectedPokemonsSlice.ts';
+import { Flyout } from '../../components/Flyout/Flyout.tsx';
 
 export default function MainPage() {
   const navigate = useNavigate();
@@ -24,6 +27,8 @@ export default function MainPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const selectedPokemonsCount = useSelector(selectPokemonSelectedCount);
 
   const loadResults = useCallback((term: string, p: number) => {
     setIsLoading(true);
@@ -117,6 +122,10 @@ export default function MainPage() {
             <Outlet />
           </div>
         )}
+
+        {selectedPokemonsCount ? (
+          <Flyout count={selectedPokemonsCount} />
+        ) : null}
       </div>
 
       <ErrorButton />

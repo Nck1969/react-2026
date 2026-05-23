@@ -27,6 +27,10 @@ export const selectIsPokemonSelected = (state: RootState, id: number) => {
   return !!state.selectedPokemons[id];
 };
 
+export const selectPokemonSelectedCount = (state: RootState) => {
+  return Object.keys(state.selectedPokemons).length;
+};
+
 // Action creators are generated for each case reducer function
 export const { addPokemon, removePokemon, clearAllPokemons } =
   selectedPokemonsSlice.actions;

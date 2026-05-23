@@ -17,3 +17,24 @@ body {
 #root {
   min-height: 100vh;
 }
+
+button {
+  padding: 0.625rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  background: #6366f1;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+button:hover {
+  background: #4f46e5;
+}
+
+button:active {
+  background: #4338ca;
+}

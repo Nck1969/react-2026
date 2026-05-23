@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Link, Outlet, useSearchParams } from 'react-router-dom';
+import { Link, Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import { fetchPokemons } from '../../api/pokeApi';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { LS_KEY } from '../../constants/storage';
@@ -13,6 +13,7 @@ import ErrorButton from '../../components/ErrorButton/ErrorButton';
 import styles from './MainPage.module.css';
 
 export default function MainPage() {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page = Number(searchParams.get('page') ?? '1') || 1;
@@ -61,8 +62,9 @@ export default function MainPage() {
     setSearchParams({ page: String(p) });
   };
 
+  // TODO: Refactor strange logic with navigation & elements route render
   const handleCardClick = (id: number) => {
-    setSearchParams({ page: String(page), details: String(id) });
+    navigate(`/details/${id}?page=${page}&details=${id}`);
   };
 
   const handleMainPanelClick = () => {

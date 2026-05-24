@@ -6,31 +6,35 @@ import { AppRoutes } from './App';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import { LS_KEY } from './constants/storage';
 import type { FetchPokemonsResult } from './types/pokemon';
+import { fetchPokemons } from './api/pokeApi';
+import { BULBASAUR, CHARMANDER, PIKACHU } from './constants/testPokemons.ts';
+import { store } from './store/store.ts';
+import { Provider } from 'react-redux';
+import { ThemeProvider } from './context/ThemeProvider.tsx';
 
 vi.mock('./api/pokeApi', () => ({
   fetchPokemons: vi.fn(),
   fetchPokemonById: vi.fn(),
 }));
 
-import { fetchPokemons } from './api/pokeApi';
-
 const mockFetch = vi.mocked(fetchPokemons);
 
 const sampleResult: FetchPokemonsResult = {
-  items: [
-    { id: 1, name: 'bulbasaur', description: 'grass, poison' },
-    { id: 4, name: 'charmander', description: 'fire' },
-  ],
+  items: [BULBASAUR, CHARMANDER],
   totalPages: 1,
 };
 
 function renderApp(initialEntry = '/?page=1') {
   return render(
-    <ErrorBoundary>
-      <MemoryRouter initialEntries={[initialEntry]}>
-        <AppRoutes />
-      </MemoryRouter>
-    </ErrorBoundary>
+    <ThemeProvider>
+      <Provider store={store}>
+        <ErrorBoundary>
+          <MemoryRouter initialEntries={[initialEntry]}>
+            <AppRoutes />
+          </MemoryRouter>
+        </ErrorBoundary>
+      </Provider>
+    </ThemeProvider>
   );
 }
 
@@ -102,7 +106,7 @@ describe('App', () => {
     await waitFor(() => expect(mockFetch).toHaveBeenCalledTimes(1));
 
     mockFetch.mockResolvedValue({
-      items: [{ id: 25, name: 'pikachu', description: 'electric' }],
+      items: [PIKACHU],
       totalPages: 1,
     });
     await user.clear(screen.getByRole('textbox'));
@@ -117,7 +121,7 @@ describe('App', () => {
     const user = userEvent.setup();
     localStorage.setItem(LS_KEY, 'pikachu');
     mockFetch.mockResolvedValue({
-      items: [{ id: 25, name: 'pikachu', description: 'electric' }],
+      items: [PIKACHU],
       totalPages: 1,
     });
     renderApp();

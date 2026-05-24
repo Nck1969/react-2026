@@ -35,6 +35,14 @@
     transition: 1s all ease-in-out;
 }
 
+.leftPosition {
+    left: 0;
+}
+
+.rightPosition {
+    right: 0;
+}
+
 .slideLeft {
     left: 0;
     animation: slideToLeft 0.5s ease;
@@ -55,4 +63,8 @@
     from { left: 0; width: 45%; }
     50%  { width: 100%; left: 0; }
     to   { left: 55%; width: 45%; }
+}
+
+[data-theme='dark'] img {
+    filter: invert(1);
 }

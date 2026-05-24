@@ -51,7 +51,6 @@ export default function MainPage() {
   useEffect(() => {
     if (!searchParams.get('page')) {
       setSearchParams({ page: '1' }, { replace: true });
-      return;
     }
     loadResults(searchTerm, page);
     // eslint-disable-next-line react-hooks/exhaustive-deps

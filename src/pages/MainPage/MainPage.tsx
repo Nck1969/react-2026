@@ -120,9 +120,7 @@ export default function MainPage() {
           </div>
         )}
 
-        {selectedPokemonsCount ? (
-          <Flyout count={selectedPokemonsCount} />
-        ) : null}
+        {selectedPokemonsCount ? <Flyout /> : null}
       </div>
 
       <ErrorButton />

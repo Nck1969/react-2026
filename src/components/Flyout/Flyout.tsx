@@ -7,11 +7,7 @@ import {
 import classes from './Flyout.module.css';
 import downloadCsv from '../../utils/downloadCsv.ts';
 
-interface FlyoutProps {
-  count: number;
-}
-
-const Flyout = memo<FlyoutProps>(({ count }) => {
+const Flyout = memo(() => {
   const selectedPokemons = useSelector(selectedPokemonsArraySelector);
   const dispatch = useDispatch();
 
@@ -25,7 +21,7 @@ const Flyout = memo<FlyoutProps>(({ count }) => {
 
   return (
     <div className={classes.wrapper}>
-      <span>{`Selected pokemons count: ${count}`}</span>
+      <span>{`Selected pokemons count: ${selectedPokemons.length}`}</span>
 
       <button onClick={handleDownloadCsvClick}>Download CSV</button>
 

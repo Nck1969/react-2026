@@ -38,6 +38,7 @@ export const pokemonApi = createApi({
       },
     }),
   }),
+  keepUnusedDataFor: Number(import.meta.env.VITE_CACHE_TTL) || 60,
 });
 
 export const { useGetPokemonListQuery, useGetPokemonByNameQuery } = pokemonApi;

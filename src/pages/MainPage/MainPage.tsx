@@ -19,6 +19,7 @@ import {
 } from '../../store/pokemonApi.ts';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { getErrorMessage } from '../../utils/getErrorMessage.ts';
+import ClearCacheButton from '../../components/ClearCacheButton/ClearCacheButton.tsx';
 
 export default function MainPage() {
   const navigate = useNavigate();
@@ -131,7 +132,11 @@ export default function MainPage() {
         {selectedPokemonsCount ? <Flyout /> : null}
       </div>
 
-      <ErrorButton />
+      <div className={styles.helpers}>
+        <ClearCacheButton />
+
+        <ErrorButton />
+      </div>
     </div>
   );
 }

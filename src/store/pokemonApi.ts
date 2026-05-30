@@ -26,6 +26,7 @@ export const pokemonApi = createApi({
           totalPages,
         };
       },
+      providesTags: ['PokemonTag'],
     }),
     getPokemonByName: build.query<PokemonDetails, string>({
       query: (name) => `pokemon/${name}`,
@@ -36,9 +37,11 @@ export const pokemonApi = createApi({
           abilities: response.abilities.map((a) => a.ability.name),
         };
       },
+      providesTags: ['PokemonTag'],
     }),
   }),
   keepUnusedDataFor: Number(import.meta.env.VITE_CACHE_TTL) || 60,
+  tagTypes: ['PokemonTag'],
 });
 
 export const { useGetPokemonListQuery, useGetPokemonByNameQuery } = pokemonApi;

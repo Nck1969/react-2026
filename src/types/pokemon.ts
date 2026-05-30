@@ -6,11 +6,6 @@ export interface PokemonMinimalDetails {
   types: string[];
 }
 
-export interface PokemonDetails extends PokemonMinimalDetails {
-  sprite: string | null;
-  abilities: string[];
-}
-
 export interface PokeApiListItem {
   name: string;
   url: string;
@@ -22,6 +17,8 @@ export interface PokeApiListResponse {
   previous: string | null;
   results: PokeApiListItem[];
 }
+
+export type PokemonList = PokeApiListResponse & { totalPages: number };
 
 export interface PokeApiType {
   type: { name: string };
@@ -42,6 +39,11 @@ export interface PokeApiPokemon {
     front_default: string | null;
   };
 }
+
+export type PokemonDetails = Omit<PokeApiPokemon, 'types' | 'abilities'> & {
+  types: string[];
+  abilities: string[];
+};
 
 export interface FetchPokemonsResult {
   items: PokemonMinimalDetails[];

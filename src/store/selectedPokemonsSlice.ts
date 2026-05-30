@@ -1,9 +1,9 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { PokemonMinimalDetails } from '../types/pokemon.ts';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
+import type { PokemonDetails } from '../types/pokemon.ts';
 import type { RootState } from './store.ts';
 
-type PokemonsState = Record<string, PokemonMinimalDetails>;
+type PokemonsState = Record<string, PokemonDetails>;
 
 const initialState: PokemonsState = {};
 
@@ -11,7 +11,7 @@ export const selectedPokemonsSlice = createSlice({
   name: 'selectedPokemons',
   initialState,
   reducers: {
-    addPokemon: (state, action: PayloadAction<PokemonMinimalDetails>) => {
+    addPokemon: (state, action: PayloadAction<PokemonDetails>) => {
       state[action.payload.id] = action.payload;
     },
     removePokemon: (state, action: PayloadAction<number>) => {
@@ -28,7 +28,12 @@ export const selectedPokemonsArraySelector = createSelector(
   (selectedPokemons) => Object.values(selectedPokemons)
 );
 
-export const isPokemonSelectedSelector = (state: RootState, id: number) => {
+export const isPokemonSelectedSelector = (
+  state: RootState,
+  id: number | undefined
+) => {
+  if (!id) return false;
+
   return !!state.selectedPokemons[id];
 };
 

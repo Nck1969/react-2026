@@ -1,9 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link, Outlet, useNavigate, useSearchParams } from 'react-router-dom';
-import { fetchPokemons } from '../../api/pokeApi';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { LS_KEY } from '../../constants/storage';
-import type { PokemonMinimalDetails } from '../../types/pokemon';
 import Search from '../../components/Search/Search';
 import Results from '../../components/Results/Results';
 import Pagination from '../../components/Pagination/Pagination';
@@ -15,6 +13,12 @@ import { useSelector } from 'react-redux';
 import { selectedPokemonsCountSelector } from '../../store/selectedPokemonsSlice.ts';
 import { Flyout } from '../../components/Flyout/Flyout.tsx';
 import { ThemeSwitcher } from '../../components/ThemeSwitcher/ThemeSwitcher.tsx';
+import {
+  useGetPokemonByNameQuery,
+  useGetPokemonListQuery,
+} from '../../store/pokemonApi.ts';
+import { skipToken } from '@reduxjs/toolkit/query';
+import { getErrorMessage } from '../../utils/getErrorMessage.ts';
 
 export default function MainPage() {
   const navigate = useNavigate();
@@ -24,35 +28,33 @@ export default function MainPage() {
   const hasDetails = searchParams.has('details') || false;
 
   const [searchTerm, setSearchTerm] = useLocalStorage(LS_KEY, '');
-  const [items, setItems] = useState<PokemonMinimalDetails[]>([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const {
+    data: listData,
+    isLoading: isListLoading,
+    isError: isListError,
+    error: listError,
+  } = useGetPokemonListQuery(!searchTerm ? page : skipToken);
+
+  const {
+    isLoading: isPokemonLoading,
+    isError: isPokemonError,
+    error: pokemonError,
+  } = useGetPokemonByNameQuery(searchTerm !== '' ? searchTerm : skipToken);
+
+  const isLoading = isListLoading || isPokemonLoading;
+  const isError = isListError || isPokemonError;
+  const error = listError || pokemonError;
+  const items = searchTerm
+    ? [{ name: searchTerm, url: '' }]
+    : (listData?.results ?? []);
 
   const selectedPokemonsCount = useSelector(selectedPokemonsCountSelector);
-
-  const loadResults = useCallback((term: string, p: number) => {
-    setIsLoading(true);
-    setErrorMessage(null);
-    fetchPokemons(term, p)
-      .then(({ items: fetched, totalPages: total }) => {
-        setItems(fetched);
-        setTotalPages(total);
-        setIsLoading(false);
-      })
-      .catch((err: unknown) => {
-        setErrorMessage(
-          err instanceof Error ? err.message : 'An unexpected error occurred'
-        );
-        setIsLoading(false);
-      });
-  }, []);
 
   useEffect(() => {
     if (!searchParams.get('page')) {
       setSearchParams({ page: '1' }, { replace: true });
     }
-    loadResults(searchTerm, page);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm, page]);
 
@@ -94,18 +96,25 @@ export default function MainPage() {
         <div className={styles.listPanel}>
           {isLoading ? (
             <Loader />
-          ) : errorMessage ? (
-            <ErrorMessage text={errorMessage} />
+          ) : isError ? (
+            <ErrorMessage
+              text={error ? getErrorMessage(error) : 'Unknown error'}
+            />
           ) : (
             <>
-              <Results items={items} onCardClick={handleCardClick} />
-              {!isLoading && totalPages > 1 && (
-                <Pagination
-                  currentPage={page}
-                  totalPages={totalPages}
-                  onChange={handlePageChange}
-                />
-              )}
+              {items ? (
+                <>
+                  <Results items={items} onCardClick={handleCardClick} />
+
+                  {!isLoading && listData && listData.count > 1 && (
+                    <Pagination
+                      currentPage={page}
+                      totalPages={listData.totalPages}
+                      onChange={handlePageChange}
+                    />
+                  )}
+                </>
+              ) : null}
             </>
           )}
         </div>

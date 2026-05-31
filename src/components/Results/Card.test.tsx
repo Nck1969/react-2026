@@ -1,5 +1,5 @@
 import { act, render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import Card from './Card';
 import { store } from '../../store/store.ts';
 import { Provider } from 'react-redux';
@@ -10,24 +10,77 @@ import {
   removePokemon,
 } from '../../store/selectedPokemonsSlice.ts';
 import userEvent from '@testing-library/user-event';
+import { useGetPokemonByNameQuery } from '../../store/pokemonApi.ts';
+
+vi.mock('../../store/pokemonApi.ts', async (importOriginal) => {
+  const actual =
+    await importOriginal<typeof import('../../store/pokemonApi.ts')>();
+  return {
+    ...actual,
+    useGetPokemonByNameQuery: vi.fn(),
+  };
+});
 
 const renderTestComponent = (cardClickHandler?: VoidFunction) =>
   render(
     <Provider store={store}>
-      <Card pokemon={BULBASAUR} onCardClick={cardClickHandler} />
+      <Card name={BULBASAUR.name} onCardClick={cardClickHandler} />
     </Provider>
   );
 
 describe('Card Component', () => {
-  beforeEach(() => store.dispatch(clearAllPokemons()));
+  beforeEach(() => {
+    store.dispatch(clearAllPokemons());
+
+    vi.mocked(useGetPokemonByNameQuery).mockReturnValue({
+      data: BULBASAUR,
+      isLoading: false,
+      isError: false,
+      error: undefined,
+      refetch: vi.fn(),
+    });
+  });
+
+  it('should display loader on data load', () => {
+    vi.mocked(useGetPokemonByNameQuery).mockReturnValue({
+      data: undefined,
+      isLoading: true,
+      isError: false,
+      error: undefined,
+      refetch: vi.fn(),
+    });
+
+    renderTestComponent();
+
+    expect(screen.getByRole('status')).toBeVisible();
+  });
+
+  it('should display error on fetch error', () => {
+    vi.mocked(useGetPokemonByNameQuery).mockReturnValue({
+      data: undefined,
+      isLoading: false,
+      isError: true,
+      error: {
+        status: 404,
+        data: 'Not found',
+      },
+      refetch: vi.fn(),
+    });
+
+    renderTestComponent();
+
+    expect(screen.getByText('Not found')).toBeVisible();
+  });
 
   it('should display pokemon name', () => {
     renderTestComponent();
+
     expect(screen.getByText('bulbasaur')).toBeInTheDocument();
   });
 
   it('should display pokemon description', () => {
     renderTestComponent();
+
     expect(screen.getByText('Grass, Poison')).toBeInTheDocument();
   });
 

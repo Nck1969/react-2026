@@ -1,28 +1,19 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import DetailsPanel from './DetailsPanel';
-import type { PokemonDetails } from '../../types/pokemon';
+import { useGetPokemonByNameQuery } from '../../store/pokemonApi.ts';
+import { PIKACHU } from '../../constants/testPokemons.ts';
 
-vi.mock('../../api/pokeApi', () => ({
-  fetchPokemonById: vi.fn(),
-  fetchPokemons: vi.fn(),
-}));
-
-import { fetchPokemonById } from '../../api/pokeApi';
-
-const mockFetchById = vi.mocked(fetchPokemonById);
-
-const mockDetails: PokemonDetails = {
-  id: 25,
-  name: 'pikachu',
-  sprite: 'https://example.com/pikachu.png',
-  types: ['electric'],
-  height: 4,
-  weight: 60,
-  abilities: ['static', 'lightning-rod'],
-};
+vi.mock('../../store/pokemonApi.ts', async (importOriginal) => {
+  const actual =
+    await importOriginal<typeof import('../../store/pokemonApi.ts')>();
+  return {
+    ...actual,
+    useGetPokemonByNameQuery: vi.fn(),
+  };
+});
 
 function renderDetails(id = '25', page = '1') {
   return render(
@@ -38,18 +29,32 @@ function renderDetails(id = '25', page = '1') {
 describe('DetailsPanel', () => {
   beforeEach(() => {
     vi.spyOn(console, 'error').mockImplementation(() => {});
-    mockFetchById.mockClear();
-    mockFetchById.mockResolvedValue(mockDetails);
+
+    vi.mocked(useGetPokemonByNameQuery).mockReturnValue({
+      data: PIKACHU,
+      isLoading: false,
+      isError: false,
+      error: undefined,
+      refetch: vi.fn(),
+    });
   });
 
   it('shows loader while fetching', () => {
-    mockFetchById.mockReturnValue(new Promise(() => {}));
+    vi.mocked(useGetPokemonByNameQuery).mockReturnValue({
+      data: undefined,
+      isLoading: true,
+      isError: false,
+      error: undefined,
+      refetch: vi.fn(),
+    });
     renderDetails();
+
     expect(screen.getByRole('status')).toBeInTheDocument();
   });
 
   it('displays pokemon name after loading', async () => {
     renderDetails();
+
     await waitFor(() =>
       expect(screen.getByText('pikachu')).toBeInTheDocument()
     );
@@ -57,34 +62,47 @@ describe('DetailsPanel', () => {
 
   it('displays pokemon types', async () => {
     renderDetails();
+
     await waitFor(() =>
-      expect(screen.getByText('electric')).toBeInTheDocument()
+      expect(screen.getByText('Electric')).toBeInTheDocument()
     );
   });
 
   it('displays sprite image', async () => {
     renderDetails();
+
     await waitFor(() =>
       expect(screen.getByRole('img', { name: /pikachu/i })).toBeInTheDocument()
     );
   });
 
   it('shows error message when fetch fails', async () => {
-    mockFetchById.mockRejectedValue(new Error('Pokemon not found'));
+    vi.mocked(useGetPokemonByNameQuery).mockReturnValue({
+      data: undefined,
+      isLoading: false,
+      isError: true,
+      error: {
+        status: 404,
+        data: 'Not found',
+      },
+      refetch: vi.fn(),
+    });
     renderDetails('9999');
+
     await waitFor(() =>
-      expect(screen.getByText('Pokemon not found')).toBeInTheDocument()
+      expect(screen.getByText('Not found')).toBeInTheDocument()
     );
   });
 
   it('navigates to home on close button click', async () => {
     const user = userEvent.setup();
     renderDetails('25', '2');
-    await waitFor(() => expect(screen.getByText('pikachu')).toBeInTheDocument());
+
+    await waitFor(() =>
+      expect(screen.getByText('pikachu')).toBeInTheDocument()
+    );
 
     await user.click(screen.getByRole('button', { name: /close details/i }));
-    await waitFor(() =>
-      expect(screen.getByText('Home')).toBeInTheDocument()
-    );
+    await waitFor(() => expect(screen.getByText('Home')).toBeInTheDocument());
   });
 });

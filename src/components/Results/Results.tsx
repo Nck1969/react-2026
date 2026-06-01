@@ -1,9 +1,9 @@
-import type { PokemonMinimalDetails } from '../../types/pokemon';
+import type { PokeApiListItem } from '../../types/pokemon';
 import CardList from './CardList';
 import styles from './Results.module.css';
 
 interface Props {
-  items: PokemonMinimalDetails[];
+  items: PokeApiListItem[];
   onCardClick?: (id: number) => void;
 }
 

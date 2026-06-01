@@ -4,6 +4,10 @@ export const BULBASAUR = {
   height: 0.7,
   weight: 6.9,
   types: ['Grass', 'Poison'],
+  abilities: ['overgrow', 'chlorophyll'],
+  sprites: {
+    front_default: 'https://example.com/bulbasaur.png',
+  },
 };
 
 export const CHARMANDER = {
@@ -12,6 +16,10 @@ export const CHARMANDER = {
   height: 0.6,
   weight: 8.5,
   types: ['Fire'],
+  abilities: ['blaze', 'solar-power'],
+  sprites: {
+    front_default: 'https://example.com/charmander.png',
+  },
 };
 
 export const SQUIRTLE = {
@@ -20,6 +28,10 @@ export const SQUIRTLE = {
   height: 0.5,
   weight: 9,
   types: ['Water'],
+  abilities: ['torrent', 'rain-dish'],
+  sprites: {
+    front_default: 'https://example.com/squirtle.png',
+  },
 };
 
 export const PIKACHU = {
@@ -28,6 +40,10 @@ export const PIKACHU = {
   height: 0.4,
   weight: 6,
   types: ['Electric'],
+  abilities: ['static', 'lightning-rod'],
+  sprites: {
+    front_default: 'https://example.com/pikachu.png',
+  },
 };
 
 export const MEWTWO = {
@@ -36,4 +52,8 @@ export const MEWTWO = {
   height: 2,
   weight: 122,
   types: ['Psychic'],
+  abilities: ['pressure', 'unnerve'],
+  sprites: {
+    front_default: 'https://example.com/mewtwo.png',
+  },
 };

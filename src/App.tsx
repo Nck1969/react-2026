@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import MainPage from './pages/MainPage/MainPage';
 import DetailsPanel from './pages/DetailsPanel/DetailsPanel';
@@ -20,9 +20,9 @@ export function AppRoutes() {
 export default function App() {
   return (
     <ErrorBoundary>
-      <BrowserRouter>
+      <HashRouter>
         <AppRoutes />
-      </BrowserRouter>
+      </HashRouter>
     </ErrorBoundary>
   );
 }

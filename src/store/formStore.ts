@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { SubmitData } from "../types/submit.ts";
+import type { SubmitData } from "../validation/schema.ts";
 
 type FormStore = {
 	submits: SubmitData[];

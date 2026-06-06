@@ -10,15 +10,16 @@
     "check": "yarn exec biome check --write"
   },
   "dependencies": {
+    "@hookform/resolvers": "5.4.0",
     "react": "19.2.7",
     "react-dom": "19.2.7",
     "react-hook-form": "7.77.0",
     "zod": "4.4.3",
-    "zustand": "5.0.14",
-    "@hookform/resolvers": "5.4.0"
+    "zustand": "5.0.14"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.16",
+    "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
     "@testing-library/user-event": "14.6.1",

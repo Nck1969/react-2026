@@ -1,7 +1,9 @@
 import { memo, type SubmitEvent, useState } from "react";
 import { z } from "zod";
+import { COUNTRIES } from "../../../constants/countries.ts";
 import useFormStore from "../../../store/formStore.ts";
 import type { FormErrors } from "../../../types/formErrors.ts";
+import { fileToBase64 } from "../../../utils/fileToBase64.ts";
 import { schema } from "../../../validation/schema.ts";
 import { UncontrolledFormFieldError } from "../FieldError/UncontrolledFormFieldError.tsx";
 
@@ -18,7 +20,10 @@ const UncontrolledForm = memo(() => {
 		const validationResult = schema.safeParse(data);
 
 		if (validationResult.success) {
-			addSubmitData(validationResult.data);
+			const imageBase64 = await fileToBase64(validationResult.data.image);
+			const submitData = { ...validationResult.data, image: imageBase64 };
+
+			addSubmitData(submitData);
 
 			setFormErrors(null);
 		} else {
@@ -80,7 +85,17 @@ const UncontrolledForm = memo(() => {
 			</div>
 			<div>
 				<label htmlFor="country">Country</label>
-				<input id={"country"} name={"country"} type={"text"} />
+				<input
+					id={"country"}
+					name={"country"}
+					type={"text"}
+					list={"countries"}
+				/>
+				<datalist id="countries">
+					{COUNTRIES.map((country) => (
+						<option key={country} value={country} />
+					))}
+				</datalist>
 				<UncontrolledFormFieldError
 					formErrors={formErrors}
 					fieldName={"country"}

@@ -1,0 +1,61 @@
+.modal-overlay {
+	position: fixed;
+	top: 0;
+
+	width: 100vw;
+	height: 100vh;
+
+	background: rgba(0, 0, 0, 0.5);
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.modal {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	background: #16171d;
+
+	border: 1px solid white;
+	width: 1126px;
+	max-width: 100%;
+}
+
+.modal-header {
+	width: 100%;
+	height: 3rem;
+	display: flex;
+	justify-content: space-between;
+}
+
+.modal-close-button {
+	margin-left: auto;
+	cursor: pointer;
+}
+
+.modal-content {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: 1rem;
+
+	justify-content: center;
+	align-items: center;
+}
+
+.modal-form-switcher {
+	display: flex;
+	justify-content: space-around;
+	gap: 1rem;
+}
+
+.modal-form-switcher-item {
+	background: transparent;
+	cursor: pointer;
+}
+
+.modal-form-switcher-item-active {
+	border: 1px solid rebeccapurple;
+}

@@ -1,7 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { memo } from "react";
 import { useForm } from "react-hook-form";
+import { COUNTRIES } from "../../../constants/countries.ts";
 import useFormStore from "../../../store/formStore.ts";
+import { fileToBase64 } from "../../../utils/fileToBase64.ts";
 import { schema } from "../../../validation/schema.ts";
 import { FieldError } from "../FieldError/FieldError.tsx";
 
@@ -13,7 +15,12 @@ const RHFForm = memo(() => {
 		formState: { errors },
 	} = useForm({ resolver: zodResolver(schema) });
 
-	const onSubmit = handleSubmit((data) => addSubmitData(data));
+	const onSubmit = handleSubmit(async (data) => {
+		const imageBase64 = await fileToBase64(data.image);
+		const submitData = { ...data, image: imageBase64 };
+
+		addSubmitData(submitData);
+	});
 
 	return (
 		<form onSubmit={onSubmit}>
@@ -56,7 +63,17 @@ const RHFForm = memo(() => {
 			</div>
 			<div>
 				<label htmlFor="country">Country</label>
-				<input {...register("country")} id={"country"} type={"text"} />
+				<input
+					{...register("country")}
+					id={"country"}
+					type={"text"}
+					list="countries"
+				/>
+				<datalist id="countries">
+					{COUNTRIES.map((country) => (
+						<option key={country} value={country} />
+					))}
+				</datalist>
 				<FieldError error={errors.country?.message} />
 			</div>
 			<div>
@@ -73,7 +90,9 @@ const RHFForm = memo(() => {
 				/>
 				<FieldError error={errors.confirmPassword?.message} />
 			</div>
-			<button type={"submit"}>Submit</button>
+			<button type={"submit"} disabled={Object.keys(errors).length > 0}>
+				Submit
+			</button>
 		</form>
 	);
 });

@@ -1,21 +1,15 @@
 import { memo } from "react";
-import type { FormErrors } from "../../../types/formErrors.ts";
 
 type FieldErrorProps = {
-	fieldName: keyof NonNullable<FormErrors["properties"]>;
-	formErrors: FormErrors | null;
+	error: string | undefined;
 };
 
-const FieldError = memo<FieldErrorProps>(({ fieldName, formErrors }) => {
-	const errors = formErrors?.properties?.[fieldName]?.errors;
-
-	if (!errors) {
+const FieldError = memo<FieldErrorProps>(({ error }) => {
+	if (!error) {
 		return null;
 	}
 
-	const errorMessage = errors.join(". ");
-
-	return <span>{errorMessage}</span>;
+	return <span>{error}</span>;
 });
 FieldError.displayName = "FieldError";
 

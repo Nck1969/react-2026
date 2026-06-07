@@ -14,10 +14,12 @@ export const schema = z
 			(val: string) => val === "on",
 			z.boolean(),
 		),
-		image: z
-			.file()
-			.mime(["image/png", "image/jpeg", "image/webp"])
-			.max(5_000_000),
+		image: z.preprocess(
+			(value: FileList | File) => {
+				return value instanceof FileList ? value.item(0) : value;
+			},
+			z.file().mime(["image/png", "image/jpeg", "image/webp"]).max(5_000_000),
+		),
 		country: z.string().min(1),
 		password: z
 			.string()

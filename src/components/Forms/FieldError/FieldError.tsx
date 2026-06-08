@@ -6,7 +6,7 @@ type FieldErrorProps = {
 };
 
 const FieldError = memo<FieldErrorProps>(({ error }) => {
-	if (!error) {
+	if (error === null || error === "") {
 		return null;
 	}
 

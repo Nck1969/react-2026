@@ -14,3 +14,7 @@
 	align-items: start;
 	padding: 1rem;
 }
+
+.submit-list-item-newest {
+	border: 1px solid fuchsia;
+}

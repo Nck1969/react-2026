@@ -6,6 +6,10 @@ import classes from "./SubmitsList.module.css";
 const SubmitsList = memo(() => {
 	const items = useFormStore((store) => store.submits);
 
+	if (items.length === 0) {
+		return <div className={classes.emptyList}>No submits</div>;
+	}
+
 	return (
 		<ul className={classes.submitList}>
 			{items.toReversed().map((item, index) => (
@@ -24,7 +28,12 @@ const SubmitsList = memo(() => {
 						}
 
 						if (key === "image") {
-							return <img src={String(value)} alt={"user"} key={key} />;
+							return (
+								<div className={classes.submitListItemImageRow}>
+									<span>Image:</span>
+									<img src={String(value)} alt={"user"} key={key} />
+								</div>
+							);
 						}
 
 						return <span key={key}>{`${key}: ${value}`}</span>;

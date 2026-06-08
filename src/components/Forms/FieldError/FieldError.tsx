@@ -1,4 +1,5 @@
 import { memo } from "react";
+import classes from "./FieldError.module.css";
 
 type FieldErrorProps = {
 	error: string | undefined;
@@ -9,7 +10,7 @@ const FieldError = memo<FieldErrorProps>(({ error }) => {
 		return null;
 	}
 
-	return <span>{error}</span>;
+	return <span className={classes.error}>{error}</span>;
 });
 FieldError.displayName = "FieldError";
 

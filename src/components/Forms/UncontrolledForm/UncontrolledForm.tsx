@@ -7,8 +7,13 @@ import { fileToBase64 } from "../../../utils/fileToBase64.ts";
 import { schema } from "../../../validation/schema.ts";
 import { PasswordStrengthIndicator } from "../../PasswordStrengthIndicator/PasswordStrengthIndicator.tsx";
 import { UncontrolledFormFieldError } from "../FieldError/UncontrolledFormFieldError.tsx";
+import classes from "../RHFForm/RHFForm.module.css";
 
-const UncontrolledForm = memo(() => {
+type UncontrolledFormProps = {
+	onSubmitHandler: VoidFunction;
+};
+
+const UncontrolledForm = memo<UncontrolledFormProps>(({ onSubmitHandler }) => {
 	const [formErrors, setFormErrors] = useState<FormErrors | null>(null);
 	const { addSubmitData } = useFormStore();
 	const [password, setPassword] = useState("");
@@ -26,8 +31,7 @@ const UncontrolledForm = memo(() => {
 			const submitData = { ...validationResult.data, image: imageBase64 };
 
 			addSubmitData(submitData);
-
-			setFormErrors(null);
+			onSubmitHandler();
 		} else {
 			const errors = z.treeifyError(validationResult.error);
 
@@ -36,100 +40,132 @@ const UncontrolledForm = memo(() => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<div>
-				<label htmlFor="name">Name</label>
-				<input id="name" name="name" type="text" />
+		<form onSubmit={handleSubmit} className={classes.form}>
+			<div className={classes.fieldset}>
+				<div className={classes.fieldsetContent}>
+					<label htmlFor="name">Name:</label>
+					<input id="name" name="name" type="text" className={classes.input} />
+				</div>
 				<UncontrolledFormFieldError
 					formErrors={formErrors}
 					fieldName={"name"}
 				/>
 			</div>
-			<div>
-				<label htmlFor="age">Age</label>
-				<input id="age" name="age" type="number" />
+
+			<div className={classes.fieldset}>
+				<div className={classes.fieldsetContent}>
+					<label htmlFor="age">Age:</label>
+					<input id="age" name="age" type="number" className={classes.input} />
+				</div>
 				<UncontrolledFormFieldError formErrors={formErrors} fieldName={"age"} />
 			</div>
-			<div>
-				<label htmlFor="email">Email</label>
-				<input id="email" name="email" type="email" />
+
+			<div className={classes.fieldset}>
+				<div className={classes.fieldsetContent}>
+					<label htmlFor="email">Email:</label>
+					<input
+						id="email"
+						name="email"
+						type="email"
+						className={classes.input}
+					/>
+				</div>
 				<UncontrolledFormFieldError
 					formErrors={formErrors}
 					fieldName={"email"}
 				/>
 			</div>
-			<div>
-				<label htmlFor="gender">Gender</label>
-				<select id={"gender"} name={"gender"}>
-					<option value={"male"}>Male</option>
-					<option value={"female"}>Female</option>
-				</select>
+
+			<div className={classes.fieldset}>
+				<div className={classes.fieldsetContent}>
+					<label htmlFor="gender">Gender:</label>
+					<select id={"gender"} name={"gender"}>
+						<option value={"male"}>Male</option>
+						<option value={"female"}>Female</option>
+					</select>
+				</div>
 				<UncontrolledFormFieldError
 					formErrors={formErrors}
 					fieldName={"gender"}
 				/>
 			</div>
-			<div>
-				<label htmlFor="terms">Terms</label>
-				<input id={"terms"} name={"terms"} type={"checkbox"} />
+
+			<div className={classes.fieldset}>
+				<div className={classes.fieldsetContent}>
+					<label htmlFor="terms">Terms:</label>
+					<input id={"terms"} name={"terms"} type={"checkbox"} />
+				</div>
 				<UncontrolledFormFieldError
 					formErrors={formErrors}
 					fieldName={"isTermsAndConditionsAccepted"}
 				/>
 			</div>
-			<div>
-				<label htmlFor="image">Image</label>
-				<input id={"image"} name={"image"} type={"file"} />
+
+			<div className={classes.fieldset}>
+				<div className={classes.fieldsetContent}>
+					<label htmlFor="image">Image:</label>
+					<input id={"image"} name={"image"} type={"file"} />
+				</div>
 				<UncontrolledFormFieldError
 					formErrors={formErrors}
 					fieldName={"image"}
 				/>
 			</div>
-			<div>
-				<label htmlFor="country">Country</label>
-				<input
-					id={"country"}
-					name={"country"}
-					type={"text"}
-					list={"countries"}
-				/>
-				<datalist id="countries">
-					{COUNTRIES.map((country) => (
-						<option key={country} value={country} />
-					))}
-				</datalist>
+
+			<div className={classes.fieldset}>
+				<div className={classes.fieldsetContent}>
+					<label htmlFor="country">Country:</label>
+					<input
+						id={"country"}
+						name={"country"}
+						type={"text"}
+						list={"countries"}
+					/>
+					<datalist id="countries">
+						{COUNTRIES.map((country) => (
+							<option key={country} value={country} />
+						))}
+					</datalist>
+				</div>
 				<UncontrolledFormFieldError
 					formErrors={formErrors}
 					fieldName={"country"}
 				/>
 			</div>
-			<div>
-				<label htmlFor="password">Password</label>
-				<input
-					id={"password"}
-					name={"password"}
-					type={"password"}
-					onChange={(event) => setPassword(event.target.value)}
-				/>
+
+			<div className={classes.fieldset}>
+				<div className={classes.fieldsetContent}>
+					<label htmlFor="password">Password:</label>
+					<input
+						id={"password"}
+						name={"password"}
+						className={classes.input}
+						type={"password"}
+						onChange={(event) => setPassword(event.target.value)}
+					/>
+				</div>
 				<PasswordStrengthIndicator value={password} />
-				<UncontrolledFormFieldError
-					formErrors={formErrors}
-					fieldName={"password"}
-				/>
 			</div>
-			<div>
-				<label htmlFor="confirmPassword">Confirm Password</label>
-				<input
-					id={"confirmPassword"}
-					name={"confirmPassword"}
-					type={"password"}
-				/>
+
+			<div className={classes.fieldset}>
+				<div className={classes.fieldsetContent}>
+					<label htmlFor="confirmPassword">Confirm Password:</label>
+					<input
+						id={"confirmPassword"}
+						name={"confirmPassword"}
+						type={"password"}
+						className={classes.input}
+					/>
+				</div>
 				<UncontrolledFormFieldError
 					formErrors={formErrors}
 					fieldName={"confirmPassword"}
 				/>
 			</div>
-			<button type={"submit"}>Submit</button>
+
+			<button type={"submit"} className={classes.submitButton}>
+				Submit
+			</button>
 		</form>
 	);
 });

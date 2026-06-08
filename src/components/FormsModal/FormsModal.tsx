@@ -72,7 +72,11 @@ const FormsModal: FC<ModalProps> = ({ onClose }) => {
 							Uncontrolled Form
 						</button>
 					</div>
-					{isDisplayRHFForm ? <RHFForm /> : <UncontrolledForm />}
+					{isDisplayRHFForm ? (
+						<RHFForm onSubmitHandler={onClose} />
+					) : (
+						<UncontrolledForm onSubmitHandler={onClose} />
+					)}
 				</div>
 			</div>
 		</div>,

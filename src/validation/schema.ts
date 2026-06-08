@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { PASSWORD_PATTERN_REGEX } from "../constants/passwordSpecialCharacterRegExp.ts";
 
 export const schema = z
 	.object({
@@ -21,11 +22,7 @@ export const schema = z
 			z.file().mime(["image/png", "image/jpeg", "image/webp"]).max(5_000_000),
 		),
 		country: z.string().min(1),
-		password: z
-			.string()
-			.regex(
-				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/,
-			),
+		password: z.string().regex(PASSWORD_PATTERN_REGEX),
 		confirmPassword: z.string().min(1),
 	})
 	.refine((data) => data.password === data.confirmPassword, {

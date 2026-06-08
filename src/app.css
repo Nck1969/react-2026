@@ -3,7 +3,6 @@
 	max-width: 100%;
 	margin: 0 auto;
 	text-align: center;
-	border-inline: 1px solid var(--border);
 	min-height: 100svh;
 	display: flex;
 	flex-direction: column;
@@ -17,4 +16,8 @@ ul {
 button {
 	cursor: pointer;
 	background: none;
+
+	&:hover {
+		background: #2e303a;
+	}
 }

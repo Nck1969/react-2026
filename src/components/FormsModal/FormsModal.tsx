@@ -37,8 +37,10 @@ const FormsModal: FC<ModalProps> = ({ onClose }) => {
 				ref={modalRef}
 				className={classes.modal}
 				onClick={(e) => e.stopPropagation()}
-				onKeyDown={(e) => e.stopPropagation()}
 				tabIndex={-1}
+				onKeyDown={(e) => {
+					if (e.key !== "Escape") e.stopPropagation();
+				}}
 			>
 				<div className={classes.modalHeader}>
 					<button

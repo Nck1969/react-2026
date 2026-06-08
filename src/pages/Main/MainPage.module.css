@@ -1,0 +1,15 @@
+.main-page {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	gap: 0.5rem;
+	margin: 1rem 0;
+}
+
+.page-content {
+	display: flex;
+	flex: 1;
+
+	border: 1px solid var(--default-border-color);
+	border-radius: var(--default-border-radius);
+}

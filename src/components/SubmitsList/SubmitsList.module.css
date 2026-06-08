@@ -1,0 +1,42 @@
+.submit-list {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	width: 100%;
+	margin: 1rem;
+}
+
+.submit-list-item {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	border: solid 1px white;
+	width: 100%;
+	align-items: start;
+	padding: 1rem;
+	border-radius: var(--default-border-radius);
+}
+
+.submit-list-item-image-row {
+	display: flex;
+	flex-direction: row;
+	gap: 0.5rem;
+
+	img {
+		max-width: 5rem;
+	}
+}
+
+.submit-list-item-newest {
+	border: 1px solid fuchsia;
+}
+
+.empty-list {
+	display: flex;
+	flex: 1;
+	justify-content: center;
+	align-items: center;
+
+	font-weight: 700;
+	color: var(--text);
+}

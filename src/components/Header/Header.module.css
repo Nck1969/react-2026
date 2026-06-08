@@ -1,0 +1,15 @@
+.header {
+	height: 4rem;
+	border: 1px solid var(--default-border-color);
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: var(--default-border-radius);
+}
+
+.open-modal-button {
+	width: fit-content;
+	height: 60%;
+	border-radius: var(--default-border-radius);
+}

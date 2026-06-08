@@ -5,6 +5,7 @@ import { COUNTRIES } from "../../../constants/countries.ts";
 import useFormStore from "../../../store/formStore.ts";
 import { fileToBase64 } from "../../../utils/fileToBase64.ts";
 import { schema } from "../../../validation/schema.ts";
+import { PasswordStrengthIndicator } from "../../PasswordStrengthIndicator/PasswordStrengthIndicator.tsx";
 import { FieldError } from "../FieldError/FieldError.tsx";
 
 const RHFForm = memo(() => {
@@ -12,6 +13,7 @@ const RHFForm = memo(() => {
 	const {
 		register,
 		handleSubmit,
+		watch,
 		formState: { errors },
 	} = useForm({ resolver: zodResolver(schema) });
 
@@ -79,6 +81,7 @@ const RHFForm = memo(() => {
 			<div>
 				<label htmlFor="password">Password</label>
 				<input {...register("password")} id={"password"} type={"password"} />
+				<PasswordStrengthIndicator value={watch("password")} />
 				<FieldError error={errors.password?.message} />
 			</div>
 			<div>

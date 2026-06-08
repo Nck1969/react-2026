@@ -5,11 +5,13 @@ import useFormStore from "../../../store/formStore.ts";
 import type { FormErrors } from "../../../types/formErrors.ts";
 import { fileToBase64 } from "../../../utils/fileToBase64.ts";
 import { schema } from "../../../validation/schema.ts";
+import { PasswordStrengthIndicator } from "../../PasswordStrengthIndicator/PasswordStrengthIndicator.tsx";
 import { UncontrolledFormFieldError } from "../FieldError/UncontrolledFormFieldError.tsx";
 
 const UncontrolledForm = memo(() => {
 	const [formErrors, setFormErrors] = useState<FormErrors | null>(null);
 	const { addSubmitData } = useFormStore();
+	const [password, setPassword] = useState("");
 
 	const handleSubmit = async (submitEvent: SubmitEvent<HTMLFormElement>) => {
 		submitEvent.preventDefault();
@@ -103,7 +105,13 @@ const UncontrolledForm = memo(() => {
 			</div>
 			<div>
 				<label htmlFor="password">Password</label>
-				<input id={"password"} name={"password"} type={"password"} />
+				<input
+					id={"password"}
+					name={"password"}
+					type={"password"}
+					onChange={(event) => setPassword(event.target.value)}
+				/>
+				<PasswordStrengthIndicator value={password} />
 				<UncontrolledFormFieldError
 					formErrors={formErrors}
 					fieldName={"password"}

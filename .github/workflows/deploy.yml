@@ -22,10 +22,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: 'package.json'
-          cache: 'npm'
+          cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn ci
+        run: yarn install --frozen-lockfile
 
       - name: Build application
         run: yarn run build

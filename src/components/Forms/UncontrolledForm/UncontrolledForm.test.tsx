@@ -105,8 +105,8 @@ describe("UncontrolledForm Coponent", () => {
 		await waitFor(() => {
 			expect(mockAddSubmitData).toHaveBeenCalledWith(
 				expect.objectContaining({
-					name: "Alice",
-					email: "alice@example.com",
+					name: "Eren",
+					email: "eren@gmail.com",
 					image: "data:image/png;base64,abc123",
 				}),
 			);

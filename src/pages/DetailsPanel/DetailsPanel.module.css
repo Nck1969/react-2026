@@ -10,17 +10,19 @@
   width: 2rem;
   height: 2rem;
   border: none;
-  background: #f1f5f9;
-  border-radius: 50%;
+  background: var(--color-bg-subtle);
   cursor: pointer;
   font-size: 0.875rem;
-  color: #64748b;
+  color: var(--color-text-secondary);
   transition: background 0.15s, color 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .closeBtn:hover {
-  background: #e2e8f0;
-  color: #1e293b;
+  background: var(--color-border);
+  color: var(--color-text-primary);
 }
 
 .content {
@@ -42,7 +44,7 @@
   font-size: 1.25rem;
   font-weight: 700;
   text-transform: capitalize;
-  color: #1e293b;
+  color: var(--color-text-primary);
 }
 
 .stats {
@@ -56,12 +58,12 @@
 
 .stats dt {
   font-weight: 600;
-  color: #64748b;
+  color: var(--color-text-secondary);
   text-transform: capitalize;
 }
 
 .stats dd {
   margin: 0;
-  color: #1e293b;
+  color: var(--color-text-primary);
   text-transform: capitalize;
 }

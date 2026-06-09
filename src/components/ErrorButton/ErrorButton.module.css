@@ -6,7 +6,7 @@
   font-size: 0.8rem;
   font-weight: 600;
   color: #fff;
-  background: #ef4444;
+  background: var(--color-error);
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -19,5 +19,5 @@
 
 .button:hover {
   opacity: 1;
-  background: #dc2626;
+  background: var(--color-error-hover);
 }

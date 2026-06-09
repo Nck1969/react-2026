@@ -5,25 +5,25 @@
   justify-content: center;
   min-height: 100vh;
   gap: 1rem;
-  background: #f1f5f9;
+  background: var(--color-bg-page);
 }
 
 .code {
   margin: 0;
   font-size: 6rem;
   font-weight: 800;
-  color: #6366f1;
+  color: var(--color-primary);
   line-height: 1;
 }
 
 .message {
   margin: 0;
   font-size: 1.25rem;
-  color: #64748b;
+  color: var(--color-text-secondary);
 }
 
 .back {
-  color: #6366f1;
+  color: var(--color-primary);
   font-weight: 600;
   text-decoration: none;
 }

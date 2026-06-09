@@ -1,0 +1,20 @@
+.wrapper {
+    position: sticky;
+    bottom: 0;
+
+    overflow-y: auto;
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    padding: 1rem;
+    min-height: 0;
+
+    height: fit-content;
+
+    background: var(--color-bg-surface);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+
+    font-weight: 600;
+}

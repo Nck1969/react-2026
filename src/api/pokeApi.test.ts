@@ -54,16 +54,27 @@ describe('fetchPokemons', () => {
   it('fetches a paginated list when searchTerm is empty', async () => {
     const fetchMock = vi
       .fn()
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockListResponse) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockBulbasaur) })
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockIvysaur) });
+      .mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(mockListResponse),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(mockBulbasaur),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve(mockIvysaur),
+      });
     vi.stubGlobal('fetch', fetchMock);
 
     const promise = fetchPokemons('');
     await vi.runAllTimersAsync();
     const result = await promise;
 
-    expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining('/pokemon?limit='));
+    expect(fetchMock).toHaveBeenCalledWith(
+      expect.stringContaining('/pokemon?limit=')
+    );
     expect(result.items).toHaveLength(2);
     expect(result.items[0].name).toBe('bulbasaur');
     expect(result.totalPages).toBe(2);
@@ -80,15 +91,20 @@ describe('fetchPokemons', () => {
     await vi.runAllTimersAsync();
     const result = await promise;
 
-    expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining('/pokemon/pikachu'));
+    expect(fetchMock).toHaveBeenCalledWith(
+      expect.stringContaining('/pokemon/pikachu')
+    );
     expect(result.items).toHaveLength(1);
     expect(result.items[0].name).toBe('pikachu');
-    expect(result.items[0].description).toBe('electric');
+    expect(result.items[0].types.at(0)).toBe('electric');
     expect(result.totalPages).toBe(1);
   });
 
   it('returns empty items when pokemon is not found (404)', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 404 }));
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({ ok: false, status: 404 })
+    );
 
     const promise = fetchPokemons('unknownmon');
     await vi.runAllTimersAsync();
@@ -99,25 +115,16 @@ describe('fetchPokemons', () => {
   });
 
   it('throws an error when list request fails with non-404', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 500 }));
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({ ok: false, status: 500 })
+    );
 
-    const assertion = expect(fetchPokemons('')).rejects.toThrow('Request failed: 500');
+    const assertion = expect(fetchPokemons('')).rejects.toThrow(
+      'Request failed: 500'
+    );
     await vi.runAllTimersAsync();
     await assertion;
-  });
-
-  it('returns description as joined type names', async () => {
-    const fetchMock = vi.fn().mockResolvedValue({
-      ok: true,
-      json: () => Promise.resolve(mockBulbasaur),
-    });
-    vi.stubGlobal('fetch', fetchMock);
-
-    const promise = fetchPokemons('bulbasaur');
-    await vi.runAllTimersAsync();
-    const result = await promise;
-
-    expect(result.items[0].description).toBe('grass, poison');
   });
 
   it('trims and lowercases the search term', async () => {
@@ -131,21 +138,31 @@ describe('fetchPokemons', () => {
     await vi.runAllTimersAsync();
     await promise;
 
-    expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining('/pokemon/pikachu'));
+    expect(fetchMock).toHaveBeenCalledWith(
+      expect.stringContaining('/pokemon/pikachu')
+    );
   });
 
   it('uses correct offset for page 2', async () => {
     const fetchMock = vi
       .fn()
-      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve({ ...mockListResponse, count: 40 }) })
-      .mockResolvedValue({ ok: true, json: () => Promise.resolve(mockBulbasaur) });
+      .mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve({ ...mockListResponse, count: 40 }),
+      })
+      .mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve(mockBulbasaur),
+      });
     vi.stubGlobal('fetch', fetchMock);
 
     const promise = fetchPokemons('', 2);
     await vi.runAllTimersAsync();
     await promise;
 
-    expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining('offset=20'));
+    expect(fetchMock).toHaveBeenCalledWith(
+      expect.stringContaining('offset=20')
+    );
   });
 });
 
@@ -160,10 +177,13 @@ describe('fetchPokemonById', () => {
   });
 
   it('returns pokemon details with sprite, types, height, weight, abilities', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
-      ok: true,
-      json: () => Promise.resolve(mockPikachu),
-    }));
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve(mockPikachu),
+      })
+    );
 
     const promise = fetchPokemonById('25');
     await vi.runAllTimersAsync();
@@ -179,9 +199,14 @@ describe('fetchPokemonById', () => {
   });
 
   it('throws when pokemon not found', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 404 }));
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({ ok: false, status: 404 })
+    );
 
-    const assertion = expect(fetchPokemonById('9999')).rejects.toThrow('Pokemon not found');
+    const assertion = expect(fetchPokemonById('9999')).rejects.toThrow(
+      'Pokemon not found'
+    );
     await vi.runAllTimersAsync();
     await assertion;
   });

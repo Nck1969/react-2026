@@ -4,7 +4,7 @@
   align-items: center;
   gap: 0.75rem;
   padding: 3rem;
-  color: #dc2626;
+  color: var(--color-error);
 }
 
 .icon {

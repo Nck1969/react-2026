@@ -1,16 +1,13 @@
-export interface PokemonView {
+export interface PokemonMinimalDetails {
   id: number;
   name: string;
-  description: string;
-}
-
-export interface PokemonDetails {
-  id: number;
-  name: string;
-  sprite: string | null;
-  types: string[];
   height: number;
   weight: number;
+  types: string[];
+}
+
+export interface PokemonDetails extends PokemonMinimalDetails {
+  sprite: string | null;
   abilities: string[];
 }
 
@@ -47,6 +44,6 @@ export interface PokeApiPokemon {
 }
 
 export interface FetchPokemonsResult {
-  items: PokemonView[];
+  items: PokemonMinimalDetails[];
   totalPages: number;
 }

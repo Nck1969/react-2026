@@ -27,9 +27,7 @@ export default function Search({ initialTerm, onSearch }: Props) {
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={handleKeyDown}
       />
-      <button className={styles.button} onClick={() => onSearch(value)}>
-        Search
-      </button>
+      <button onClick={() => onSearch(value)}>Search</button>
     </div>
   );
 }

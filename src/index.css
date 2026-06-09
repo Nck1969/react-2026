@@ -4,16 +4,93 @@
   box-sizing: border-box;
 }
 
+:root {
+  /* Backgrounds */
+  --color-bg-page: #f1f5f9;
+  --color-bg-surface: #ffffff;
+  --color-bg-surface-alt: #f8fafc;
+  --color-bg-subtle: #f1f5f9;
+
+  /* Text */
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #64748b;
+  --color-text-tertiary: #475569;
+  --color-text-muted: #94a3b8;
+
+  /* Border */
+  --color-border: #e2e8f0;
+
+  /* Brand */
+  --color-primary: #6366f1;
+  --color-primary-hover: #4f46e5;
+  --color-primary-active: #4338ca;
+
+  /* Error */
+  --color-error: #dc2626;
+  --color-error-hover: #b91c1c;
+  --color-error-text: #b91c1c;
+  --color-error-bg: #fef2f2;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 1px 4px rgba(0, 0, 0, 0.08);
+  --shadow-brand: 0 2px 8px rgba(99, 102, 241, 0.15);
+}
+
+[data-theme="dark"] {
+  --color-bg-page: #0f172a;
+  --color-bg-surface: #1e293b;
+  --color-bg-surface-alt: #273548;
+  --color-bg-subtle: #334155;
+
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-text-tertiary: #94a3b8;
+  --color-text-muted: #475569;
+
+  --color-border: #334155;
+
+  --color-error: #ef4444;
+  --color-error-hover: #dc2626;
+  --color-error-text: #ef4444;
+  --color-error-bg: #1f0a0a;
+
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 1px 4px rgba(0, 0, 0, 0.4);
+  --shadow-brand: 0 2px 8px rgba(99, 102, 241, 0.25);
+}
+
 body {
   margin: 0;
   font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  color: #1e293b;
-  background: #f1f5f9;
+  color: var(--color-text-primary);
+  background: var(--color-bg-page);
   -webkit-font-smoothing: antialiased;
 }
 
 #root {
   min-height: 100vh;
+}
+
+button {
+  padding: 0.625rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--color-primary);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+button:hover {
+  background: var(--color-primary-hover);
+}
+
+button:active {
+  background: var(--color-primary-active);
 }

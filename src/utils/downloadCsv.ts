@@ -21,11 +21,9 @@ const downloadCsv = (pokemons: PokemonMinimalDetails[]): void => {
   link.setAttribute('href', uri);
   link.setAttribute('download', fileName);
 
-  document.body.appendChild(link);
   link.click();
 
   URL.revokeObjectURL(uri);
-  document.body.removeChild(link);
 };
 
 export default downloadCsv;

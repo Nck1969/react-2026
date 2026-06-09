@@ -1,13 +1,13 @@
+import clsx from 'clsx';
 import { memo, useEffect, useRef } from 'react';
+import moonIcon from '../../assets/moon.svg';
+import sunIcon from '../../assets/sun.svg';
 import { useTheme } from '../../context/useTheme.ts';
 import classes from './ThemeSwitcher.module.css';
-import moonIcon from '../../assets/moon.svg';
-import sunIcon from '../../assets/sun2.svg';
-import clsx from 'clsx';
 
 const ThemeSwitcher = memo(() => {
   const isMounted = useRef(false);
-  const { toggleTheme, isDarkMode } = useTheme();
+  const { toggleTheme, theme } = useTheme();
 
   useEffect(() => {
     isMounted.current = true;
@@ -15,14 +15,14 @@ const ThemeSwitcher = memo(() => {
 
   return (
     <button className={classes.switcher} onClick={toggleTheme}>
-      <img src={sunIcon} alt="dark theme" />
+      <img src={sunIcon} alt="light theme" />
       <img src={moonIcon} alt="dark theme" />
       <div
         className={clsx(
           classes.activeIndicator,
-          !isDarkMode ? classes.leftPosition : classes.rightPosition,
+          theme === 'light' ? classes.leftPosition : classes.rightPosition,
           isMounted.current
-            ? isDarkMode
+            ? theme === 'dark'
               ? classes.slideRight
               : classes.slideLeft
             : undefined

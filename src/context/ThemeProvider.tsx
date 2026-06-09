@@ -1,27 +1,26 @@
 import { type PropsWithChildren, useEffect, useState } from 'react';
-import { ThemeContext } from './ThemeContext';
 import { THEME_KEY } from '../constants/storage.ts';
+import { isTheme, type Theme } from '../constants/theme.ts';
+import { ThemeContext } from './ThemeContext';
 
 export const ThemeProvider = ({ children }: PropsWithChildren) => {
-  const [isDarkMode, setDarkMode] = useState(() => {
+  const [theme, setTheme] = useState<Theme>(() => {
     const savedTheme = localStorage.getItem(THEME_KEY);
 
-    return savedTheme === 'dark';
+    return isTheme(savedTheme) ? savedTheme : 'dark';
   });
 
   const toggleTheme = () => {
-    setDarkMode((mode) => !mode);
+    setTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
   };
 
   useEffect(() => {
-    const theme = isDarkMode ? 'dark' : 'light';
-
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem(THEME_KEY, theme);
-  }, [isDarkMode]);
+  }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ toggleTheme, isDarkMode }}>
+    <ThemeContext.Provider value={{ toggleTheme, theme }}>
       {children}
     </ThemeContext.Provider>
   );

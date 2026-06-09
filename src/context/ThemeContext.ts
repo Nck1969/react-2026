@@ -1,7 +1,8 @@
 import { createContext } from 'react';
+import type { Theme } from '../constants/theme.ts';
 
 interface ThemeContextType {
-  isDarkMode: boolean;
+  theme: Theme;
   toggleTheme: VoidFunction;
 }
 

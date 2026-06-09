@@ -1,20 +1,20 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import { fetchPokemons } from '../../api/pokeApi';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
-import { LS_KEY } from '../../constants/storage';
-import type { PokemonMinimalDetails } from '../../types/pokemon';
-import Search from '../../components/Search/Search';
-import Results from '../../components/Results/Results';
-import Pagination from '../../components/Pagination/Pagination';
-import Loader from '../../components/Loader/Loader';
-import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import ErrorButton from '../../components/ErrorButton/ErrorButton';
-import styles from './MainPage.module.css';
-import { useSelector } from 'react-redux';
-import { selectedPokemonsCountSelector } from '../../store/selectedPokemonsSlice.ts';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import { Flyout } from '../../components/Flyout/Flyout.tsx';
+import Loader from '../../components/Loader/Loader';
+import Pagination from '../../components/Pagination/Pagination';
+import Results from '../../components/Results/Results';
+import Search from '../../components/Search/Search';
 import { ThemeSwitcher } from '../../components/ThemeSwitcher/ThemeSwitcher.tsx';
+import { LS_KEY } from '../../constants/storage';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { selectedPokemonsCountSelector } from '../../store/selectedPokemonsSlice.ts';
+import type { PokemonMinimalDetails } from '../../types/pokemon';
+import styles from './MainPage.module.css';
 
 export default function MainPage() {
   const navigate = useNavigate();
@@ -38,14 +38,13 @@ export default function MainPage() {
       .then(({ items: fetched, totalPages: total }) => {
         setItems(fetched);
         setTotalPages(total);
-        setIsLoading(false);
       })
       .catch((err: unknown) => {
         setErrorMessage(
           err instanceof Error ? err.message : 'An unexpected error occurred'
         );
-        setIsLoading(false);
-      });
+      })
+      .finally(() => setIsLoading(false));
   }, []);
 
   useEffect(() => {
